@@ -68,4 +68,15 @@ public class AuthController {
               .body(new MessageResponse(ex.getMessage(), 400));
     }
   }
+
+  @GetMapping("/user/{token}")
+  public ResponseEntity<?> getUserInfoByJWT(@PathVariable String token){
+    try{
+      return userService.getUserInfoByJWT(token);
+    }catch (Exception ex){
+      return ResponseEntity
+              .badRequest()
+              .body(new MessageResponse(ex.getMessage(), 400));
+    }
+  }
 }

@@ -1,5 +1,7 @@
 package com.auth.service.service;
 
+import com.auth.service.dto.UserClientDTO;
+import com.auth.service.dto.UserDTO;
 import com.auth.service.entity.Role;
 import com.auth.service.entity.User;
 import com.auth.service.base.request.LoginRequest;
@@ -138,10 +140,25 @@ public class UserService {
     return claims;
   }
 
-//  Get current user info
-
+  //  Get current user info
   public ResponseEntity<?> verifyJwtToken(String token) {
     Boolean validate = jwtUtils.validateJwtToken(token);
     return ResponseEntity.ok().body(validate);
+  }
+
+  public ResponseEntity<?> getUserInfoByJWT(String token) {
+    Claims userClaim = decodeJWT(token);
+    String currentUsername = userClaim.getSubject();
+    User currentUser = userRepository.findByUsername(currentUsername).get();
+
+//    UserDTO currentUserDTO = new UserDTO();
+//    currentUserDTO.setUserName(currentUser.getUsername());
+//    currentUserDTO.setEmail(currentUser.getEmail());
+//    currentUserDTO.setFirstName(currentUser.getFirstName());
+//    currentUserDTO.setLastName(currentUser.getLastName());
+
+    UserClientDTO currentUserDTO = userRepository.findUserClientDTOByUsername(currentUsername);
+
+    return ResponseEntity.ok().body(currentUserDTO);
   }
 }
