@@ -9,7 +9,7 @@ spring:
   data:
     mongodb:
       field-naming-strategy: org.springframework.data.mapping.model.SnakeCaseFieldNamingStrategy
-      uri: mongodb://localhost:27017/user_db
+      uri: mongodb+srv://minh160302:Canhminh-160302@cluster0.6ffh6.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 
 
 server:
